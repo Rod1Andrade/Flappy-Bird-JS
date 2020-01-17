@@ -7,11 +7,9 @@
   <title>Flappy Bird JS</title>
 
   <style>
-    * { padding:0; margin: 0; }
 
-    canvas {
-      background-color: #eee;
-      display: block;
+    #screen {
+      border: 1px solid #CCC;
       margin: 0 auto;
     }
 
@@ -21,20 +19,72 @@
 <body>
 
   <!-- This in Canvas, where the game is rendered -->
-  <canvas id="canvas" width="480" height="320"></canvas>
-
+  <canvas id="screen" width="366" height="512"></canvas>
+  
   <script>
 
-    const canvas  = document.querySelector('#canvas');
-    const ctx     = canvas.getContext('2d');
+    const screen = document.getElementById('screen');
+    const context = screen.getContext('2d'); 
 
-    ctx.beginPath();
-    ctx.rect(20, 40, 50, 50);
-    ctx.fillStyle = '#FF0000';
-    ctx.fill();
-    ctx.closePath();
+    const w = screen.width;
+    const h = screen.height;
+
+    const bird = {
+      assets : {
+        src: 'Assets/sprites/bluebird-midflap.png',
+      },
+      location: {
+        x: 30,
+        y: (h + 32) / 2,
+      },
+      color: 'yellow',
+    }
+
+    const pipes = [
+      {
+        assets: {},
+        location: {x: w - 32, y: h - 100 },
+        color: 'green',
+      },
+      {
+        assets: {},
+        location: { x: w - 32, y: 0 },
+        color: 'green',
+      }
+    ];
+    
+    renderedScreen();
+
+    function renderedScreen() {
+
+      // Limpa a tela      
+      context.fillStyle = '#F00';
+      context.rect(0, 0, w, h);
+
+      // Para cada cano existente é feito o desenho
+      pipes.forEach(pipe => drawPipe(pipe));
+      drawFlappy(bird);
+      requestAnimationFrame(renderedScreen());
+    }
+
+    function drawFlappy(bird) {
+      context.beginPath();
+      context.rect(bird.location.x, bird.location.y, 32, 24);
+      context.fillStyle = bird.color;
+      context.fill();
+      context.closePath();
+    }
+
+    function drawPipe(pipe) {
+        context.beginPath();
+        context.rect(pipe.location.x, pipe.location.y, 32, 100);
+        context.fillStyle = pipe.color;
+        context.fill();
+        context.closePath();
+    }
 
   </script>
+
 
 </body>
 </html>
