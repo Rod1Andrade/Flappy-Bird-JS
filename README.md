@@ -26,5 +26,5 @@ Questões pendentes:
  
  Versão implementada até o momento: 
  
- ![](Explains/images/FlappyBird-video.gif)
+ ![](Explains/images/FlappyBird-Video.gif)
  
