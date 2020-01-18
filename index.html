@@ -59,8 +59,8 @@
     // Bird Object
     const bird = {
       speed: 0,
-      gravity: 0.10,
-      jumpForce: 2.3,
+      gravity: 0.098,
+      jumpForce: 4.3,
       animation: [
         { asset: 'Assets/sprites/bluebird-downflap.png'},
         { asset: 'Assets/sprites/bluebird-midflap.png' },
@@ -73,7 +73,7 @@
       height: 24,
       frameAnimation: 0,
       flap() {
-
+        this.speed = -this.jumpForce;
       },
       draw(){
         const sprite = this._sprite();
@@ -87,6 +87,17 @@
         this.period = state.current == state.ready ? 10 : 5;
         this.frameAnimation += frame % this.period == 0 ? 1 : 0;
         this.frameAnimation = this.frameAnimation % this.animation.length;
+
+        if(state.current == state.running){ 
+          this.speed += this.gravity;
+          this.axiosY += this.speed;
+
+          this._isDead();
+        }else if(state.current == state.ready){
+          this.axiosY = 150;
+          this.speed = 0;
+        }
+        
       },
 
       _sprite() {
@@ -95,6 +106,14 @@
         sprite.src = animationSprite;
 
         return sprite;
+      },
+
+      _isDead() {
+        if(this.axiosY + this.height > screen.height - foreground.height){
+          console.log('Colision Base');
+          this.axiosY = screen.height - foreground.height - this.height;
+          state.current = state.over;
+        }
       }
 
     }
