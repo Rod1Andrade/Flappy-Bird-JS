@@ -10,6 +10,7 @@
 
     #screen {
       border: 1px solid #CCC;
+      display: block;
       margin: 0 auto;
     }
 
@@ -23,65 +24,59 @@
   
   <script>
 
-    const screen = document.getElementById('screen');
-    const context = screen.getContext('2d'); 
+    const screen = document.querySelector('#screen');
+    const context = screen.getContext('2d');
 
-    const w = screen.width;
-    const h = screen.height;
+    let frame = 0;
 
-    const bird = {
-      assets : {
-        src: 'Assets/sprites/bluebird-midflap.png',
-      },
-      location: {
-        x: 30,
-        y: (h + 32) / 2,
-      },
-      color: 'yellow',
-    }
+    // Background
+    const background = {
+      asset: 'Assets/sprites/background-day.png',
+      width:288,
+      height: 512,
+      axiosX: 0,
+      axiosY: 0,
 
-    const pipes = [
-      {
-        assets: {},
-        location: {x: w - 32, y: h - 100 },
-        color: 'green',
+      draw() {
+        const sprite = this._sprite();
+
+        context.drawImage(
+          sprite, this.axiosX, this.axiosY, 
+          this.width, this.height
+        );
+
+        context.drawImage(
+          sprite, this.axiosX + this.width, this.axiosY, 
+          this.width, this.height
+        );
       },
-      {
-        assets: {},
-        location: { x: w - 32, y: 0 },
-        color: 'green',
+
+      _sprite() {
+        const sprite = new Image;
+        sprite.src = this.asset;
+
+        return sprite;
       }
-    ];
-    
-    renderedScreen();
 
-    function renderedScreen() {
-
-      // Limpa a tela      
-      context.fillStyle = '#F00';
-      context.rect(0, 0, w, h);
-
-      // Para cada cano existente é feito o desenho
-      pipes.forEach(pipe => drawPipe(pipe));
-      drawFlappy(bird);
-      requestAnimationFrame(renderedScreen());
     }
 
-    function drawFlappy(bird) {
-      context.beginPath();
-      context.rect(bird.location.x, bird.location.y, 32, 24);
-      context.fillStyle = bird.color;
-      context.fill();
-      context.closePath();
+    function draw() {
+      background.draw();
     }
 
-    function drawPipe(pipe) {
-        context.beginPath();
-        context.rect(pipe.location.x, pipe.location.y, 32, 100);
-        context.fillStyle = pipe.color;
-        context.fill();
-        context.closePath();
+    function update() {
+
     }
+
+    function gameloop() {
+      draw();
+      update();
+      frame++;
+      requestAnimationFrame(gameloop);
+    }
+
+    gameloop();
+
 
   </script>
 
