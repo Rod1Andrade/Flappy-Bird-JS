@@ -28,3 +28,8 @@ Questões pendentes:
  
  ![](Explains/images/FlappyBird-Video.gif)
  
+# Conclusão:
+
+Os Assets usados foram pegos de um projeto com a licença MIT no git: https://github.com/sourabhv/FlapPyBird
+Video do Filip Deschamps que me inspirou para fazer o jogo: https://www.youtube.com/watch?v=0sTfIZvjYJk&list=PLMdYygf53DP5SVQQrkKCVWDS0TwYLVitL
+Conceitos básicos sobre desenvolvimento de jogo com Javascript e Canvas: https://developer.mozilla.org/pt-BR/docs/Web/HTML/Canvas
