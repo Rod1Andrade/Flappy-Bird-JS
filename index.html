@@ -92,10 +92,12 @@
           this.speed += this.gravity;
           this.axiosY += this.speed;
 
+          console.log(`speed: ${this.speed}`);
+
           this._isDead();
         }else if(state.current == state.ready){
-          this.axiosY = 150;
-          this.speed = 0;
+          this.axiosY = 150; // Reset Axios Y 
+          this.speed = 0; // Reset Speed
         }
         
       },
@@ -248,7 +250,6 @@
     }
 
     gameloop();
-
 
   </script>
 
