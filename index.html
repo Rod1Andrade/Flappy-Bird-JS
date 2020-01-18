@@ -60,8 +60,37 @@
 
     }
 
+    // Foreground
+    const foreground = {
+      assets: 'Assets/sprites/base.png',
+      axiosX: 0,
+      axiosY: screen.height - 112,
+      width: 322,
+      height: 112,
+      draw() {
+        const sprite = this._sprite();
+
+        context.drawImage(sprite,
+          this.axiosX, this.axiosY,
+          this.width, this.height
+        );
+
+        context.drawImage(sprite,
+          this.axiosX + this.width, this.axiosY,
+          this.width, this.height
+        );
+      },
+      _sprite() {
+        const sprite = new Image;
+        sprite.src = this.assets;
+
+        return sprite;
+      }
+    }
+
     function draw() {
       background.draw();
+      foreground.draw();
     }
 
     function update() {
