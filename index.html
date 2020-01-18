@@ -27,6 +27,8 @@
     const screen = document.querySelector('#screen');
     const context = screen.getContext('2d');
 
+    console.log(screen.width / 2);
+
     let frame = 0;
 
     // Background
@@ -88,9 +90,58 @@
       }
     }
 
+    // Game Ready
+    const gameReady = {
+      assets: 'Assets/sprites/message.png',
+      axiosX: (184 / 2),
+      axiosY: 100,
+      width: 184,
+      height: 267,
+      draw() {
+        const sprite = this._sprite();
+
+        context.drawImage(sprite,
+          this.axiosX, this.axiosY,
+          this.width, this.height
+        );
+      },
+      _sprite() {
+        const sprite = new Image;
+        sprite.src = this.assets;
+
+        return sprite;
+      }
+    }
+
+    // Game Over
+    const gameOver = {
+      assets: 'Assets/sprites/gameover.png',
+      axiosX: (184 / 2),
+      axiosY: 100,
+      width: 192,
+      height: 42,
+      draw() {
+        const sprite = this._sprite();
+
+        context.drawImage(sprite,
+          this.axiosX, this.axiosY,
+          this.width, this.height
+        );
+      },
+      _sprite() {
+        const sprite = new Image;
+        sprite.src = this.assets;
+
+        return sprite;
+      }
+    }
+
+    // The game place:
     function draw() {
       background.draw();
       foreground.draw();
+      gameReady.draw();
+      gameOver.draw();
     }
 
     function update() {
