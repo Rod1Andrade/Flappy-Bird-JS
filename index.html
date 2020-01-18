@@ -28,6 +28,8 @@
     const screen = document.querySelector('#screen');
     const context = screen.getContext('2d');
 
+    console.log(`Metade da tela: ${screen.width / 2}`);
+
     let frame = 0;
 
     // Game State configurations to Controll the game 
@@ -60,7 +62,7 @@
     const bird = {
       speed: 0,
       gravity: 0.098,
-      jumpForce: 4.3,
+      jumpForce: 2.3,
       animation: [
         { asset: 'Assets/sprites/bluebird-downflap.png'},
         { asset: 'Assets/sprites/bluebird-midflap.png' },
@@ -92,8 +94,6 @@
           this.speed += this.gravity;
           this.axiosY += this.speed;
 
-          console.log(`speed: ${this.speed}`);
-
           this._isDead();
         }else if(state.current == state.ready){
           this.axiosY = 150; // Reset Axios Y 
@@ -118,6 +118,79 @@
         }
       }
 
+    }
+
+    // Pipes 
+    const pipes = {
+      toppipe: {
+        asset: 'Assets/sprites/pipe-green-top.png',
+        axiosY: -100,
+      },
+      bottompipe: {
+        asset: 'Assets/sprites/pipe-green.png',
+        axiosY: screen.height - 220,
+      },
+      axiosX: screen.width - 52,
+      gap: 80, 
+      width: 52,
+      height: 320,
+      positions: [],
+      deltaX: -2,
+      speedAnimation: 0.25,
+
+      draw() {
+        const [spriteTop, spriteBottom] = this._sprite();
+
+        const [toppipeY, bottompipeY] = [this.toppipe.axiosY, this.bottompipe.axiosY];
+
+        if(state.current == state.running){
+
+          context.drawImage(spriteTop,
+            this.axiosX, toppipeY,
+            this.width, this.height
+          );
+          
+          context.drawImage(spriteBottom,
+            this.axiosX, bottompipeY,
+            this.width, this.height
+          );
+
+        }
+      },
+
+      update() {
+
+        if(state.current == state.running){
+
+          this.axiosX += this.deltaX;
+          if(this.axiosX + this.width <= 0) {
+            console.log('End The screen');
+            
+            this.axiosX = screen.width;
+            
+            const y = Math.random() * (230 - (150 - this.gap) + 1) + (150 - this.gap);
+            console.log(`axios Y top pipe: ${-y}`);
+            console.log(`axios Y bottom pipe: ${y * 2}`);
+
+            this.toppipe.axiosY = -y;
+            this.bottompipe.axiosY = this.height - y + this.gap;
+          }
+        }
+
+        if(state.current == state.over){
+          this.axiosX = screen.width - 52;
+        }
+      },
+
+      _sprite() {
+        const pipeGreenTop = new Image();
+        const pipeGreenbottom = new Image();
+        
+        pipeGreenTop.src = this.toppipe.asset;
+        pipeGreenbottom.src = this.bottompipe.asset;
+
+        return [pipeGreenTop, pipeGreenbottom];
+      }
     }
 
     // Background
@@ -232,6 +305,7 @@
     // The game place:
     function draw() {
       background.draw();
+      pipes.draw();
       foreground.draw();
       gameReady.draw();
       gameOver.draw();
@@ -240,6 +314,7 @@
 
     function update() {
       bird.update();
+      pipes.update();
     }
 
     function gameloop() {
