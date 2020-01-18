@@ -12,6 +12,7 @@
       border: 1px solid #CCC;
       display: block;
       margin: 0 auto;
+      cursor: pointer;
     }
 
   </style>
@@ -27,10 +28,35 @@
     const screen = document.querySelector('#screen');
     const context = screen.getContext('2d');
 
-    console.log(screen.width / 2);
-
     let frame = 0;
 
+    // Game State configurations to Controll the game 
+    const state = {
+      current: 0,
+      ready: 0,
+      running: 1,
+      over: 2,
+    }
+
+    
+    // Event Listener by the mouse click
+    screen.addEventListener('click', (event) => {
+      switch(state.current){
+        case state.ready:
+          state.current = state.running;
+        break;
+
+        case state.running:
+          bird.flap();
+        break;
+
+        case state.over:
+          state.current = state.ready;
+        break;
+      }
+    });
+
+    // Bird Object
     const bird = {
       speed: 0,
       gravity: 0.10,
@@ -46,17 +72,23 @@
       width: 34,
       height: 24,
       frameAnimation: 0,
+      flap() {
+
+      },
       draw(){
         const sprite = this._sprite();
-
         context.drawImage(sprite,
           this.axiosX, this.axiosY,
           this.width, this.height
         );
       },
+
       update(){
-        
+        this.period = state.current == state.ready ? 10 : 5;
+        this.frameAnimation += frame % this.period == 0 ? 1 : 0;
+        this.frameAnimation = this.frameAnimation % this.animation.length;
       },
+
       _sprite() {
         const animationSprite = this.animation[this.frameAnimation].asset;
         const sprite = new Image;
@@ -135,11 +167,12 @@
       height: 267,
       draw() {
         const sprite = this._sprite();
-
-        context.drawImage(sprite,
-          this.axiosX, this.axiosY,
-          this.width, this.height
-        );
+          if(state.current == state.ready){
+          context.drawImage(sprite,
+            this.axiosX, this.axiosY,
+            this.width, this.height
+          );
+        }
       },
       _sprite() {
         const sprite = new Image;
@@ -159,10 +192,12 @@
       draw() {
         const sprite = this._sprite();
 
-        context.drawImage(sprite,
-          this.axiosX, this.axiosY,
-          this.width, this.height
-        );
+        if(state.current == state.over){
+          context.drawImage(sprite,
+            this.axiosX, this.axiosY,
+            this.width, this.height
+          );
+        }
       },
       _sprite() {
         const sprite = new Image;
@@ -171,6 +206,7 @@
         return sprite;
       }
     }
+
 
     // The game place:
     function draw() {
@@ -182,7 +218,7 @@
     }
 
     function update() {
-
+      bird.update();
     }
 
     function gameloop() {
