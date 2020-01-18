@@ -31,6 +31,42 @@
 
     let frame = 0;
 
+    const bird = {
+      speed: 0,
+      gravity: 0.10,
+      jumpForce: 2.3,
+      animation: [
+        { asset: 'Assets/sprites/bluebird-downflap.png'},
+        { asset: 'Assets/sprites/bluebird-midflap.png' },
+        { asset: 'Assets/sprites/bluebird-upflap.png' },
+        { asset: 'Assets/sprites/bluebird-midflap.png' },
+      ],
+      axiosX: 50,
+      axiosY: 150,
+      width: 34,
+      height: 24,
+      frameAnimation: 0,
+      draw(){
+        const sprite = this._sprite();
+
+        context.drawImage(sprite,
+          this.axiosX, this.axiosY,
+          this.width, this.height
+        );
+      },
+      update(){
+        
+      },
+      _sprite() {
+        const animationSprite = this.animation[this.frameAnimation].asset;
+        const sprite = new Image;
+        sprite.src = animationSprite;
+
+        return sprite;
+      }
+
+    }
+
     // Background
     const background = {
       asset: 'Assets/sprites/background-day.png',
@@ -94,7 +130,7 @@
     const gameReady = {
       assets: 'Assets/sprites/message.png',
       axiosX: (184 / 2),
-      axiosY: 100,
+      axiosY: 20,
       width: 184,
       height: 267,
       draw() {
@@ -142,6 +178,7 @@
       foreground.draw();
       gameReady.draw();
       gameOver.draw();
+      bird.draw();
     }
 
     function update() {
