@@ -4,7 +4,7 @@ Desafio de implementar um jogo do Flappy Bird utilizando apenas HTML, CSS e Java
 
 ## Como testar?
 
-Basta clonar ou fazer download do repositório e abrir o index.hml
+Basta clonar ou fazer download do repositório e abrir o index.html
 
 ## Segundo o wikpedia:
 
