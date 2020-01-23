@@ -2,6 +2,10 @@
 
 Desafio de implementar um jogo do Flappy Bird utilizando apenas HTML, CSS e Javascript
 
+## Como testar:
+
+Basta clonar ou fazer download do repositório e abrir o index.hml
+
 ## Segundo o wikpedia:
 
 Flappy Bird é um jogo eletrônico para dispositivos móveis de 2013 desenvolvido em Hanói pelo programador vietnamita Nguyễn Hà Đông e publicado pela .GEARS studios.
@@ -21,12 +25,7 @@ O jogo está em desenvolvimento ainda, mas quase concluído.
 
 Questões pendentes:
  * Rotação do personagem;
- * Colisão com os canos (pipes);
  * Score.
- 
- Versão implementada até o momento: 
- 
- ![](Explains/images/FlappyBird-Video.gif)
  
 # Conclusão:
 
