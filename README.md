@@ -2,7 +2,7 @@
 
 Desafio de implementar um jogo do Flappy Bird utilizando apenas HTML, CSS e Javascript
 
-## Como testar:
+## Como testar?
 
 Basta clonar ou fazer download do repositório e abrir o index.hml
 
